@@ -1,6 +1,6 @@
 from enum import Enum
 
 
-class Kind(Enum):
+class CardType(Enum):
     ANSWER = "answer"
     QUESTION = "question"
