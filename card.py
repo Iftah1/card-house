@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 from uuid import UUID
-from typing import Dict, Any
+from typing import Dict
 
 from card_type import CardType
 
