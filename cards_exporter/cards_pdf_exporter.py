@@ -2,7 +2,7 @@ import pdfkit
 from jinja2 import Environment, FileSystemLoader
 from typing import List, NoReturn
 from entities.card import Card
-from icardexporter import ICardExporter
+from cards_exporter.icardexporter import ICardExporter
 from configuration_keys import ConfigurationKeys
 
 

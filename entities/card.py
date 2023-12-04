@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from card_type import CardDesignProperties
+from entities.card_type import CardDesignProperties
 
 
 @dataclass
