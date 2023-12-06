@@ -3,7 +3,7 @@ from jinja2 import Environment, FileSystemLoader
 from typing import List, NoReturn
 from entities.card import Card
 from cards_exporter.icardexporter import ICardExporter
-from Utils.configuration_keys import ConfigurationKeys
+from utils.configuration_keys import ConfigurationKeys
 
 
 class CardPdfExporter(ICardExporter):

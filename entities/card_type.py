@@ -1,5 +1,5 @@
 from enum import Enum
-from Utils.configuration_keys import ConfigurationKeys
+from utils.configuration_keys import ConfigurationKeys
 
 
 class CardType(Enum):
