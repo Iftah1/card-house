@@ -17,8 +17,9 @@ def generate_cards_exporter(config: dict) -> ICardExporter:
 
 
 def get_cards_list(config: dict) -> List[Card]:
-    question = config[CardType.QUESTION.GetDesignPropertiesKey()]
-    answer = config[CardType.ANSWER.GetDesignPropertiesKey()]
+
+    question = config[CardDesignProperties.GetDesignPropertiesConfigurationKey(CardType.QUESTION)]
+    answer = config[CardDesignProperties.GetDesignPropertiesConfigurationKey(CardType.ANSWER)]
     return [
         Card("Hello Mr. Kotler, how are you?", CardType.QUESTION, CardDesignProperties(question)),
         Card("I wanted to tell you something", CardType.ANSWER, CardDesignProperties(answer)),
