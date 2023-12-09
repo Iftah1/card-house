@@ -1,5 +1,5 @@
 import json
-from typing import List
+from typing import List, Dict, Any
 from entities.card import Card
 from entities.card_type import CardType
 from entities.card_design_properties import CardDesignProperties
@@ -7,16 +7,16 @@ from cards_exporter.cards_pdf_exporter import CardPdfExporter
 from cards_exporter.icardexporter import ICardExporter
 
 
-def load_configurations() -> dict:
+def load_configurations() -> Dict[str, Any]:
     with open("appsettings.json") as f:
         return json.load(f)
 
 
-def generate_cards_exporter(config: dict) -> ICardExporter:
+def generate_cards_exporter(config: Dict[str, Any]) -> ICardExporter:
     return CardPdfExporter(config)
 
 
-def get_cards_list(config: dict) -> List[Card]:
+def get_cards_list(config: Dict[str, Any]) -> List[Card]:
 
     question = config[CardDesignProperties.GetDesignPropertiesConfigurationKey(CardType.QUESTION)]
     answer = config[CardDesignProperties.GetDesignPropertiesConfigurationKey(CardType.ANSWER)]

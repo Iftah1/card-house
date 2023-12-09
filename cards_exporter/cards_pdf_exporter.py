@@ -1,6 +1,6 @@
 import pdfkit
 from jinja2 import Environment, FileSystemLoader
-from typing import List, NoReturn
+from typing import List, Dict, NoReturn, Any
 from entities.card import Card
 from cards_exporter.icardexporter import ICardExporter
 from utils.configuration_keys import ConfigurationKeys
@@ -8,7 +8,7 @@ from utils.configuration_keys import ConfigurationKeys
 
 class CardPdfExporter(ICardExporter):
 
-    def __init__(self, configuration: dict):
+    def __init__(self, configuration: Dict[str, Any]):
         self._env = Environment(loader=FileSystemLoader('.'))
         self._configuration = configuration
 
@@ -27,6 +27,6 @@ class CardPdfExporter(ICardExporter):
         template = self._env.get_template(template_file_path)
         return template.render(rows=cards)
 
-    def write_cards_to_file(self, cards: str, output_path: str):
+    def write_cards_to_file(self, rendered_cards: str, output_path: str):
         style_files_paths = self._configuration[ConfigurationKeys.STYLE_FILES_KEY]
-        pdfkit.from_string(cards, output_path, css=style_files_paths)
+        pdfkit.from_string(rendered_cards, output_path, css=style_files_paths)
