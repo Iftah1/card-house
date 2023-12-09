@@ -27,6 +27,6 @@ class CardPdfExporter(ICardExporter):
         template = self._env.get_template(template_file_path)
         return template.render(rows=cards)
 
-    def write_cards_to_file(self, rendered_cards: str, output_path: str):
+    def write_cards_to_file(self, rendered_cards: str, output_path: str) -> NoReturn:
         style_files_paths = self._configuration[ConfigurationKeys.STYLE_FILES_KEY]
         pdfkit.from_string(rendered_cards, output_path, css=style_files_paths)
