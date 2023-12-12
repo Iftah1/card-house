@@ -5,6 +5,7 @@ from entities.card_type import CardType
 from entities.card_design_properties import CardDesignProperties
 from cards_exporter.cards_pdf_exporter import CardPdfExporter
 from cards_exporter.icardexporter import ICardExporter
+from utils.cards_splitter import CardsSplitter, ICardsSplitter
 
 
 def load_configurations() -> Dict[str, Any]:
@@ -12,12 +13,11 @@ def load_configurations() -> Dict[str, Any]:
         return json.load(f)
 
 
-def generate_cards_exporter(config: Dict[str, Any]) -> ICardExporter:
-    return CardPdfExporter(config)
+def generate_cards_exporter(config: Dict[str, Any], cards_splitter: ICardsSplitter) -> ICardExporter:
+    return CardPdfExporter(config, cards_splitter)
 
 
 def get_cards_list(config: Dict[str, Any]) -> List[Card]:
-
     question = config[CardDesignProperties.GetDesignPropertiesConfigurationKey(CardType.QUESTION)]
     answer = config[CardDesignProperties.GetDesignPropertiesConfigurationKey(CardType.ANSWER)]
     return [
@@ -48,5 +48,6 @@ if __name__ == '__main__':
     configuration = load_configurations()
     output_path = "output.pdf"
     cards = get_cards_list(configuration)
-    exporter = generate_cards_exporter(configuration)
+    splitter = CardsSplitter(configuration)
+    exporter = generate_cards_exporter(configuration, splitter)
     exporter.export_cards(cards=cards, output_path=output_path)

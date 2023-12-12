@@ -1,4 +1,6 @@
-{% for row in rows %}
-    {% include 'cards_exporter/templates/row-template.html' %}
+{% for page in pages %}
+    {% for row in page %}
+        {% include 'cards_exporter/templates/row-template.html' %}
+    {% endfor %}
 {% endfor %}
 
