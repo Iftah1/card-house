@@ -1,15 +1,18 @@
 from dataclasses import dataclass
+from entities.card_type import CardType
+from entities.card_design_properties import CardDesignProperties
 from datetime import datetime
 from uuid import UUID
 from typing import Dict
-
 from card_type import CardType
+
 
 
 @dataclass
 class Card:
     content: str
-    card_type: CardType
+    type: CardType
+    design_properties: CardDesignProperties
     date: datetime
     version: str
     id: UUID
