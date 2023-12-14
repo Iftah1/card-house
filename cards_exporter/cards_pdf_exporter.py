@@ -24,7 +24,7 @@ class CardPdfExporter(ICardExporter):
         for i in range(0, len(cards), cards_in_row):
             yield cards[i: min(i + cards_in_row, len(cards))]
 
-    def render_cards_template(self, cards: List[List[Card]]) -> str:
+    def render_cards_template(self, cards: List[Row]) -> str:
         template_file_path: str = self._configuration[ConfigurationKeys.TEMPLATE_FILE_PATH_KEY]
         template = self._env.get_template(template_file_path)
         return template.render(rows=cards)
