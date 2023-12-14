@@ -1,4 +1,10 @@
 {% for page in pages %}
+    {% set card_template_path = 'cards_exporter/templates/card-template.html' %}
+    {% for row in page %}
+        {% include 'cards_exporter/templates/row-template.html' %}
+    {% endfor %}
+
+    {% set card_template_path = 'cards_exporter/templates/background-template.html' %}
     {% for row in page %}
         {% include 'cards_exporter/templates/row-template.html' %}
     {% endfor %}
