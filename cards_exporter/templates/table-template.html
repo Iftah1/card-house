@@ -4,6 +4,8 @@
         {% include 'cards_exporter/templates/row-template.html' %}
     {% endfor %}
 
+    <div style="page-break-before:always"></div>
+
     {% set card_template_path = 'cards_exporter/templates/background-template.html' %}
     {% for row in page %}
         {% include 'cards_exporter/templates/row-template.html' %}

@@ -1,12 +1,3 @@
-#cards #background-answer-card {
-	text-shadow: 0 1px rgba(255,255,255,.8);
-	background: #eee;
-	border: 1px solid #ddd;
-	color: #333;
-	padding: 20px;
-	width: 323px; /* plan width = 180 + 20 + 20 + 1 + 1 = 222px */
-	height: 362.8px;
-	float: left;
-	position: relative;
-	background-image: linear-gradient(#23FAF3, #eee);
+#cards .background-answer-card {
+    background-image: -webkit-linear-gradient(#05DB70, #eee);
 }
