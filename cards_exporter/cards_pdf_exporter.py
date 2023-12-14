@@ -1,10 +1,15 @@
 import pdfkit
+import os
 from jinja2 import Environment, FileSystemLoader
 from typing import List, Dict, NoReturn, Any
 from entities.card import Card
 from cards_exporter.icardexporter import ICardExporter
 from utils.configuration_keys import ConfigurationKeys
 from utils.icard_splitter import ICardsSplitter, Page
+
+
+def get_style_files(style_dir: str) -> List[str]:
+    return [os.path.join(directory, file) for directory, _, files in os.walk(style_dir) for file in files]
 
 
 class CardPdfExporter(ICardExporter):
@@ -26,4 +31,4 @@ class CardPdfExporter(ICardExporter):
 
     def write_cards_to_file(self, rendered_cards: str, output_path: str) -> NoReturn:
         style_files_paths = self._configuration[ConfigurationKeys.STYLE_FILES_KEY]
-        pdfkit.from_string(rendered_cards, output_path, css=style_files_paths)
+        pdfkit.from_string(rendered_cards, output_path, css=get_style_files(style_files_paths))
