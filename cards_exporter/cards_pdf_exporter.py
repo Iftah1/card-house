@@ -5,6 +5,8 @@ from entities.card import Card
 from cards_exporter.icardexporter import ICardExporter
 from utils.configuration_keys import ConfigurationKeys
 
+Row = List[Card]
+
 
 class CardPdfExporter(ICardExporter):
 
@@ -17,7 +19,7 @@ class CardPdfExporter(ICardExporter):
         rendered_cards = self.render_cards_template(cards_in_rows)
         self.write_cards_to_file(rendered_cards, output_path)
 
-    def split_cards_to_rows(self, cards: List[Card]) -> List[List[Card]]:
+    def split_cards_to_rows(self, cards: List[Card]) -> List[Row]:
         cards_in_row: int = self._configuration[ConfigurationKeys.NUM_CARDS_IN_ROW_KEY]
         for i in range(0, len(cards), cards_in_row):
             yield cards[i: min(i + cards_in_row, len(cards))]
