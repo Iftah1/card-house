@@ -16,6 +16,6 @@ class CardDesignProperties:
         self.design_id = json_dict["design_id"]
 
     @staticmethod
-    def GetDesignPropertiesConfigurationKey(card_type: CardType) -> str:
+    def get_design_properties_configuration_key(card_type: CardType) -> str:
         return ConfigurationKeys.QUESTION_DESIGN_PROPERTIES_KEY if card_type == CardType.QUESTION \
             else ConfigurationKeys.ANSWER_DESIGN_PROPERTIES_KEY
