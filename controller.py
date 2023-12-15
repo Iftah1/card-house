@@ -1,11 +1,12 @@
 from typing import List, Dict
 
-from iclient_db import IClientDB
+from db.iclient_db import IClientDB
 from entities.card import Card
 from entities.card_proprties import CardProperties
 from entities.status import Status
 
 from flask import Flask, request
+from consts import *
 
 
 CARDS_SERIALIZED = Dict[str, List[Dict[str, str]]]
@@ -18,9 +19,9 @@ class Controller:
         self.setup_routes()
 
     def setup_routes(self):
-        self.app.route("/add_card", methods=["POST"])(self.add_card)
-        self.app.route("/remove_card", methods=["POST"])(self.remove_card)
-        self.app.route("/filter_cards", methods=["POST"])(self.filter_cards)
+        self.app.route("/add_card", methods=[POST])(self.add_card)
+        self.app.route("/remove_card", methods=[POST])(self.remove_card)
+        self.app.route("/filter_cards", methods=[POST])(self.filter_cards)
 
     def run(self):
         self.app.run(debug=True)
