@@ -1,8 +1,11 @@
 from dataclasses import dataclass
+
+from flask import Request
+
 from entities.card_type import CardType
 from entities.card_design_properties import CardDesignProperties
 from datetime import datetime
-from uuid import UUID
+from uuid import UUID, uuid4
 from typing import Dict
 from card_type import CardType
 from entities.card_proprties import CardProperties
@@ -26,3 +29,8 @@ class Card:
                 serialized_card[key] = "null"
 
         return serialized_card
+
+    @staticmethod
+    def generate_card(request: Request) -> 'Card':
+        card_properties = CardProperties.generate_card_properties(request)
+        return Card(card_properties=card_properties, design_properties=None)
