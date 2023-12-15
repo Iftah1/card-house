@@ -29,7 +29,7 @@ class CardProperties:
             card_type = CardType.ANSWER
         else:
             card_type = CardType.QUESTION
-        date = datetime.strptime(card_json["date"], "%Y-%m-%d %H:%M:%S")
+        date = datetime.strptime(card_json["date"], "%Y-%m-%d")
         version = card_json["version"]
         id = card_json["id"]
         return CardProperties(

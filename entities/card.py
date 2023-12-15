@@ -2,13 +2,11 @@ from dataclasses import dataclass
 
 from flask import Request
 
-from entities.card_type import CardType
 from entities.card_design_properties import CardDesignProperties
-from datetime import datetime
-from uuid import UUID, uuid4
-from typing import Dict
-from card_type import CardType
+from typing import Dict, List
 from entities.card_proprties import CardProperties
+
+CARDS_SERIALIZED = Dict[str, List[Dict[str, str]]]
 
 
 @dataclass
@@ -16,7 +14,7 @@ class Card:
     card_properties: CardProperties
     design_properties: CardDesignProperties
 
-    def serialize_card(self) -> Dict[str, str]:
+    def card_to_dict(self) -> Dict[str, str]:
         serialized_card = {
             "content": self.card_properties.content,
             "card_type": self.card_properties.type.value,
@@ -29,6 +27,15 @@ class Card:
                 serialized_card[key] = "null"
 
         return serialized_card
+
+    @staticmethod
+    def cards_to_dict(cards: List['Card']) -> CARDS_SERIALIZED:
+        cards_dict = {
+            "cards": []
+        }
+        for card in cards:
+            cards_dict["cards"].append(card.card_to_dict())
+        return cards_dict
 
     @staticmethod
     def generate_card(request: Request) -> 'Card':

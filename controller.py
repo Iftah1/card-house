@@ -1,17 +1,20 @@
-from typing import List
+from typing import List, Dict
 
 from iclient_db import IClientDB
 from entities.card import Card
 from entities.card_proprties import CardProperties
 from entities.status import Status
 
-from flask import Flask, request, Request
+from flask import Flask, request
+
+
+CARDS_SERIALIZED = Dict[str, List[Dict[str, str]]]
 
 
 class Controller:
-    def __init__(self):
+    def __init__(self, client_db: IClientDB):
         self.app = Flask(__name__)
-        self.client_db = IClientDB()
+        self.client_db = client_db
         self.setup_routes()
 
     def setup_routes(self):
@@ -32,7 +35,8 @@ class Controller:
         status = self.client_db.remove_card(card)
         return status
 
-    def filter_cards(self) -> List[Card]:
+    def filter_cards(self) -> CARDS_SERIALIZED:
         card_properties = CardProperties.generate_card_properties(request)
         filtered_cards = self.client_db.get_cards(card_properties)
-        return filtered_cards
+        cards_serialized = Card.cards_to_dict(filtered_cards)
+        return cards_serialized
