@@ -5,25 +5,21 @@ from datetime import datetime
 from uuid import UUID
 from typing import Dict
 from card_type import CardType
-
+from entities.card_proprties import CardProperties
 
 
 @dataclass
 class Card:
-    content: str
-    type: CardType
+    card_properties: CardProperties
     design_properties: CardDesignProperties
-    date: datetime
-    version: str
-    id: UUID
 
     def serialize_card(self) -> Dict[str, str]:
         serialized_card = {
-            "content": self.content,
-            "card_type": self.card_type.value,
-            "date": str(self.date),
-            "version": self.version,
-            "id": self.id
+            "content": self.card_properties.content,
+            "card_type": self.card_properties.type.value,
+            "date": str(self.card_properties.date),
+            "version": self.card_properties.version,
+            "id": self.card_properties.id
         }
         for key, value in serialized_card.items():
             if value is None:
