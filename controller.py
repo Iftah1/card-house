@@ -6,19 +6,19 @@ from entities.card_proprties import CardProperties
 from entities.status import Status
 
 from flask import Flask, request
-from consts import *
+from utils.consts import *
 
 
 CARDS_SERIALIZED = Dict[str, List[Dict[str, str]]]
 
 
 class Controller:
-    def __init__(self, client_db: IClientDB):
-        self.app = Flask(__name__)
+    def __init__(self, client_db: IClientDB, app: Flask):
+        self.app = app
         self.client_db = client_db
-        self.setup_routes()
+        self._setup_routes()
 
-    def setup_routes(self):
+    def _setup_routes(self):
         self.app.route("/add_card", methods=[POST])(self.add_card)
         self.app.route("/remove_card", methods=[POST])(self.remove_card)
         self.app.route("/filter_cards", methods=[POST])(self.filter_cards)

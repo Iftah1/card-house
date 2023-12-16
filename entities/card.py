@@ -5,7 +5,7 @@ from flask import Request
 from entities.card_design_properties import CardDesignProperties
 from typing import Dict, List
 from entities.card_proprties import CardProperties
-from consts import *
+from utils.consts import *
 
 CARDS_SERIALIZED = Dict[str, List[Dict[str, str]]]
 
@@ -15,7 +15,7 @@ class Card:
     card_properties: CardProperties
     design_properties: CardDesignProperties
 
-    def card_to_dict(self) -> Dict[str, str]:
+    def _card_to_dict(self) -> Dict[str, str]:
         serialized_card = {
             CONTENT: self.card_properties.content,
             CARD_TYPE: self.card_properties.type.value,
@@ -35,7 +35,7 @@ class Card:
             CARDS: []
         }
         for card in cards:
-            cards_dict[CARDS].append(card.card_to_dict())
+            cards_dict[CARDS].append(card._card_to_dict())
         return cards_dict
 
     @staticmethod

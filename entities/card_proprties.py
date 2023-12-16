@@ -6,7 +6,7 @@ from uuid import UUID
 from flask import Request
 
 from entities.card_type import CardType
-from consts import *
+from utils.consts import *
 
 
 @dataclass
@@ -20,10 +20,10 @@ class CardProperties:
     @staticmethod
     def generate_card_properties(request: Request) -> 'CardProperties':
         card_json = request.json
-        return CardProperties.generate_card_from_json(card_json)
+        return CardProperties._generate_card_from_json(card_json)
 
     @staticmethod
-    def generate_card_from_json(card_json: Dict[str, str]) -> 'CardProperties':
+    def _generate_card_from_json(card_json: Dict[str, str]) -> 'CardProperties':
         content = card_json[CONTENT]
         request_card_type = card_json[CARD_TYPE]
         if request_card_type == CardType.ANSWER.value:
@@ -32,11 +32,11 @@ class CardProperties:
             card_type = CardType.QUESTION
         date = datetime.strptime(card_json[DATE], TIME_FORMAT)
         version = card_json[VERSION]
-        id = card_json[ID]
+        id = UUID(card_json[ID])
         return CardProperties(
                 content=content,
                 version=version,
                 date=date,
-                id=UUID(id),
+                id=id,
                 type=card_type
         )

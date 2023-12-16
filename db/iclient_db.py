@@ -19,4 +19,3 @@ class IClientDB(ABC):
     @abstractmethod
     def get_cards(self, card_properties: CardProperties) -> List[Card]:
         raise NotImplementedError
-
