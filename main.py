@@ -5,7 +5,6 @@ from entities.card_type import CardType
 from entities.card_design_properties import CardDesignProperties
 from cards_exporter.cards_pdf_exporter import CardPdfExporter
 from cards_exporter.icardexporter import ICardExporter
-from utils.cards_splitter import CardsSplitter, ICardsSplitter
 
 
 def load_configurations() -> Dict[str, Any]:
@@ -13,13 +12,14 @@ def load_configurations() -> Dict[str, Any]:
         return json.load(f)
 
 
-def generate_cards_exporter(config: Dict[str, Any], cards_splitter: ICardsSplitter) -> ICardExporter:
-    return CardPdfExporter(config, cards_splitter)
+def generate_cards_exporter(config: Dict[str, Any]) -> ICardExporter:
+    return CardPdfExporter(config)
 
 
 def get_cards_list(config: Dict[str, Any]) -> List[Card]:
-    question = config[CardDesignProperties.get_design_properties_configuration_key(CardType.QUESTION)]
-    answer = config[CardDesignProperties.get_design_properties_configuration_key(CardType.ANSWER)]
+
+    question = config[CardDesignProperties.GetDesignPropertiesConfigurationKey(CardType.QUESTION)]
+    answer = config[CardDesignProperties.GetDesignPropertiesConfigurationKey(CardType.ANSWER)]
     return [
         Card("Hello Mr. Kotler, how are you?", CardType.QUESTION, CardDesignProperties(question)),
         Card("I wanted to tell you something", CardType.ANSWER, CardDesignProperties(answer)),
@@ -48,6 +48,5 @@ if __name__ == '__main__':
     configuration = load_configurations()
     output_path = "output.pdf"
     cards = get_cards_list(configuration)
-    splitter = CardsSplitter(configuration)
-    exporter = generate_cards_exporter(configuration, splitter)
+    exporter = generate_cards_exporter(configuration)
     exporter.export_cards(cards=cards, output_path=output_path)
