@@ -2,9 +2,10 @@ import os
 from typing import Dict, Any, List, NoReturn
 import pdfkit
 from code.cards_exporter.cards_exporter_configuration.configuration_keys import ConfigurationKeys
+from code.cards_exporter.cards_exporter_io.cards_file_writer.icards_file_writer import ICardsFileWriter
 
 
-class HtmlToPdfCardsFileWriter:
+class HtmlToPdfCardsFileWriter(ICardsFileWriter):
     def __init__(self, configuration: Dict[str, Any]):
         self._configuration = configuration
 
