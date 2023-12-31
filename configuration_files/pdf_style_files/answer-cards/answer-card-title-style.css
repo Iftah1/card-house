@@ -1,0 +1,8 @@
+#cards #answer-card h3 {
+    color: #000;
+    font: 30px 'Lucida Sans', 'trebuchet MS', Arial, Helvetica;
+	font-weight: bold;
+	padding: 20px;
+	margin: -20px -20px 50px -20px;
+	background-image: -webkit-linear-gradient(#05DB70, #eee);
+}
