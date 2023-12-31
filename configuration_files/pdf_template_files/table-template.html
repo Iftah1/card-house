@@ -1,0 +1,14 @@
+{% for page in pages %}
+    {% set card_template_path = 'configuration_files/pdf_template_files/card-template.html' %}
+    {% for row in page %}
+        {% include 'configuration_files/pdf_template_files/row-template.html' %}
+    {% endfor %}
+
+    <div style="page-break-before:always"></div>
+
+    {% set card_template_path = 'configuration_files/pdf_template_files/background-template.html' %}
+    {% for row in page %}
+        {% include 'configuration_files/pdf_template_files/row-template.html' %}
+    {% endfor %}
+{% endfor %}
+
