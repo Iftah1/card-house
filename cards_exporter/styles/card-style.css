@@ -8,4 +8,5 @@
 	height: 362.8px;
 	float: left;
 	position: relative;
+	background-origin:border-box;
 }
