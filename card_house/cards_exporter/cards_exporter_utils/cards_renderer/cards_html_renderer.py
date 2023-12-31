@@ -1,6 +1,6 @@
-from code.cards_exporter.cards_exporter_configuration.configuration_keys import ConfigurationKeys
-from code.cards_exporter.cards_exporter_utils.cards_renderer.icards_renderer import ICardsRenderer
-from code.cards_exporter.cards_exporter_utils.cards_splitter.icards_splitter import Page
+from card_house.cards_exporter.cards_exporter_configuration.configuration_keys import ConfigurationKeys
+from card_house.cards_exporter.cards_exporter_utils.cards_renderer.icards_renderer import ICardsRenderer
+from card_house.cards_exporter.cards_exporter_utils.cards_splitter.icards_splitter import Page
 from typing import List, Dict, Any
 from jinja2 import Environment, FileSystemLoader
 

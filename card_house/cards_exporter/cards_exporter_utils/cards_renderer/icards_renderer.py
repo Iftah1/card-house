@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List
-from code.cards_exporter.cards_exporter_entities.printed_card import Page
+from card_house.cards_exporter.cards_exporter_entities.printed_card import Page
 
 
 class ICardsRenderer(ABC):

@@ -1,9 +1,9 @@
 from typing import List, Dict, Any
-from code.cards_exporter.cards_exporter_configuration.configuration_keys import ConfigurationKeys
-from code.cards_exporter.cards_exporter_entities.printed_card import PrintedCard
-from code.cards_exporter.cards_exporter_utils.printed_cards_creator.iprinted_cards_creator import IPrintedCardsCreator
-from code.infrastructure.entities.card import Card
-from code.infrastructure.entities.card_type import CardType
+from card_house.cards_exporter.cards_exporter_configuration.configuration_keys import ConfigurationKeys
+from card_house.cards_exporter.cards_exporter_entities.printed_card import PrintedCard
+from card_house.cards_exporter.cards_exporter_utils.printed_cards_creator.iprinted_cards_creator import IPrintedCardsCreator
+from card_house.infrastructure.entities.card import Card
+from card_house.infrastructure.entities.card_type import CardType
 
 
 class PrintedCardsCreator(IPrintedCardsCreator):
