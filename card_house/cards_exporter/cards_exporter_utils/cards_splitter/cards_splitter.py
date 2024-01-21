@@ -19,11 +19,12 @@ class CardsSplitter(ICardsSplitter):
         return self.split_pages_into_rows(pages_without_rows)
 
     def split_cards_to_pages_without_rows(self, cards: List[Card]) -> List[PageWithoutRows]:
-        cards_in_page = self.get_num_of_cards_in_page()
+        cards_in_page = self.num_of_cards_in_page
         for i in range(0, len(cards), cards_in_page):
             yield self._printed_cards_creator.create_printed_cards_from_cards(cards[i:i + cards_in_page])
 
-    def get_num_of_cards_in_page(self) -> int:
+    @property
+    def num_of_cards_in_page(self) -> int:
         cards_in_row = self._configuration[ConfigurationKeys.NUM_CARDS_IN_ROW_KEY]
         rows_in_page = self._configuration[ConfigurationKeys.NUM_ROWS_IN_PAGE_KEY]
         return rows_in_page * cards_in_row
