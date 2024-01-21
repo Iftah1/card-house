@@ -42,14 +42,14 @@ def create_exporter(config_path: str) -> ICardsExporter:
 
 
 def main():
-    text_path = "card_house/cards_exporter/cards_exporter_tests/cards_text.txt"
+    text_path = "tests/cards_exporter_tests/cards_text.txt"
     configuration_path = "card_house/cards_exporter/cards_exporter_configuration/appsettings.json"
-    output_path = "card_house/cards_exporter/cards_exporter_tests/output.pdf"
+    output_path = "tests/cards_exporter_tests/output.pdf"
     cards: List[Card] = create_cards_list(text_path)
     cards_exporter: ICardsExporter = create_exporter(configuration_path)
     cards_exporter.export_cards(cards, output_path)
 
 
 if __name__ == '__main__':
-    os.chdir("../../../")
+    os.chdir("../../")
     main()
