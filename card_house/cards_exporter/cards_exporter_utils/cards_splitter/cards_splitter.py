@@ -2,7 +2,7 @@ from typing import List, Dict, Any
 from card_house.cards_exporter.cards_exporter_configuration.configuration_keys import ConfigurationKeys
 from card_house.cards_exporter.cards_exporter_entities.printed_card import PrintedCard, Page
 from card_house.cards_exporter.cards_exporter_utils.cards_splitter.icards_splitter import ICardsSplitter
-from card_house.cards_exporter.cards_exporter_utils.printed_cards_creator.iprinted_cards_creator import IPrintedCardsCreator
+from card_house.infrastructure.cards_creators.icards_creator import ICardsCreator
 from card_house.infrastructure.entities.card import Card
 
 PageWithoutRows = List[PrintedCard]
@@ -10,7 +10,7 @@ PageWithoutRows = List[PrintedCard]
 
 class CardsSplitter(ICardsSplitter):
 
-    def __init__(self, configuration: Dict[str, Any], printed_cards_creator: IPrintedCardsCreator):
+    def __init__(self, configuration: Dict[str, Any], printed_cards_creator: ICardsCreator):
         self._configuration = configuration
         self._printed_cards_creator = printed_cards_creator
 
@@ -21,7 +21,7 @@ class CardsSplitter(ICardsSplitter):
     def split_cards_to_pages_without_rows(self, cards: List[Card]) -> List[PageWithoutRows]:
         cards_in_page = self.num_of_cards_in_page
         for i in range(0, len(cards), cards_in_page):
-            yield self._printed_cards_creator.create_printed_cards_from_cards(cards[i:i + cards_in_page])
+            yield self._printed_cards_creator.create_cards(cards[i:i + cards_in_page])
 
     @property
     def num_of_cards_in_page(self) -> int:

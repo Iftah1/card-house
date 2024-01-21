@@ -10,10 +10,8 @@ from card_house.cards_exporter.cards_exporter_utils.cards_renderer.cards_html_re
 from card_house.cards_exporter.cards_exporter_utils.cards_renderer.icards_renderer import ICardsRenderer
 from card_house.cards_exporter.cards_exporter_utils.cards_splitter.cards_splitter import CardsSplitter
 from card_house.cards_exporter.cards_exporter_utils.cards_splitter.icards_splitter import ICardsSplitter
-from card_house.cards_exporter.cards_exporter_utils.printed_cards_creator.iprinted_cards_creator import \
-    IPrintedCardsCreator
-from card_house.cards_exporter.cards_exporter_utils.printed_cards_creator.printed_cards_creator import \
-    PrintedCardsCreator
+from card_house.infrastructure.cards_creators.icards_creator import ICardsCreator
+from card_house.infrastructure.cards_creators.printed_cards_creator import PrintedCardsCreator
 from card_house.infrastructure.entities.card import Card
 from card_house.infrastructure.entities.card_type import CardType
 
@@ -34,7 +32,7 @@ def create_configuration(config_path: str) -> Dict[str, Any]:
 
 def create_exporter(config_path: str) -> ICardsExporter:
     configuration: Dict[str, Any] = create_configuration(config_path)
-    printed_cards_creator: IPrintedCardsCreator = PrintedCardsCreator(configuration)
+    printed_cards_creator: ICardsCreator = PrintedCardsCreator(configuration)
     cards_splitter: ICardsSplitter = CardsSplitter(configuration, printed_cards_creator)
     cards_renderer: ICardsRenderer = CardsHtmlRenderer(configuration)
     cards_file_writer: ICardsFileWriter = HtmlToPdfCardsFileWriter(configuration)
