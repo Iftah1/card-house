@@ -5,13 +5,7 @@ Row = List["PrintedCard"]
 Page = List[Row]
 
 
-@dataclass
 class PrintedCard:
-    content: str
-    title: str
-    sign: str
-    design_id: str
-
     def __init__(self, content: str, design_properties: Dict[str, Any]):
         self.content = content
         self.title = design_properties["title"]
