@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List
+from typing import List, Any, Dict
 
 from card_house.infrastructure.entities.card import Card
 from card_house.infrastructure.entities.card_type import CardType
@@ -15,14 +15,14 @@ class DBCard(Card):
     card_id: str
 
     @staticmethod
-    def cards_list_to_dict(cards: List['DBCard']) -> dict:
+    def cards_list_to_dict(cards: List['DBCard']) -> Dict[str, Any]:
         return {
             "cards": [
                 card.to_dict() for card in cards
             ]
         }
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> Dict[str, Any]:
         return {
             "type": str(self.type),
             "content": self.content,

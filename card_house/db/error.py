@@ -1,0 +1,2 @@
+class CardExists(Exception):
+    pass

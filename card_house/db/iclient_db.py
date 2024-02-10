@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Any, Dict
 
 from card_house.infrastructure.entities.db_card import DBCard
 
@@ -14,5 +14,5 @@ class IClientDB(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def get_cards(self, card_properties: DBCard) -> List[DBCard]:
+    def get_cards(self, card_properties: Dict[str, Any]) -> List[DBCard]:
         raise NotImplementedError

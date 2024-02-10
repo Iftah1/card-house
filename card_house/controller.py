@@ -1,5 +1,6 @@
-from typing import List, Dict
+from typing import List, Dict, Any
 
+from card_house.db.error import CardExists
 from card_house.infrastructure.cards_creators.db_cards_creator import DBCardsCreator
 from card_house.infrastructure.entities.db_card import DBCard, DBCardKeys
 from card_house.db.iclient_db import IClientDB
@@ -24,7 +25,7 @@ class Controller:
 
     def _setup_routes(self):
         self.app.route("/add_card", methods=["POST"])(self.add_card)
-        self.app.route("/remove_card", methods=["POST"])(self.remove_card)
+        self.app.route("/remove_card", methods=["DELETE"])(self.remove_card)
         self.app.route("/filter_cards", methods=["POST"])(self.filter_cards)
 
     def run(self):
@@ -32,6 +33,16 @@ class Controller:
 
     def add_card(self) -> str:
         card = self.db_card_creator.create_card(request)
+        card_with_same_properties = self.client_db.get_cards(
+            card_properties={
+                DBCardKeys.TYPE: card.type.value,
+                DBCardKeys.CONTENT: card.content,
+            }
+        )
+
+        if len(card_with_same_properties) != 0:
+            raise CardExists
+
         card_id = self.client_db.add_card(card)
         return card_id
 
@@ -40,7 +51,7 @@ class Controller:
         status = self.client_db.remove_card(card_id)
         return "removed" if status else "failed"
 
-    def filter_cards(self) -> dict:
+    def filter_cards(self) -> Dict[str, Any]:
         filtered_cards = self.client_db.get_cards(request.json)
         cards_serialized = DBCard.cards_list_to_dict(filtered_cards)
         return cards_serialized

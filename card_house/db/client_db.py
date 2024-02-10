@@ -1,7 +1,7 @@
 import sqlite3
 from card_house.db.cards_db_columns import CardsDBColumns
 
-from typing import List, Any
+from typing import List, Any, Dict
 
 from card_house.infrastructure.entities.card_type import CardType
 from card_house.infrastructure.entities.db_card import DBCard
@@ -42,7 +42,7 @@ class CardsDB(IClientDB):
         self.execute_query(delete_query)
         return True
 
-    def get_cards(self, card_properties: dict) -> List[DBCard]:
+    def get_cards(self, card_properties: Dict[str, Any]) -> List[DBCard]:
         select_query = """
             SELECT * FROM cards where 1 = 1
         """
