@@ -38,3 +38,4 @@ class DBCardKeys:
     VERSION = "version"
     CREATION_TIME = "creation_time"
     CARD_ID = "card_id"
+    CARDS = "cards"

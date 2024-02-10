@@ -24,7 +24,7 @@ class Controller:
         self._setup_routes()
 
     def _setup_routes(self):
-        self.app.route("/add_card", methods=["POST"])(self.add_card)
+        self.app.route("/add_card", methods=["POST", "OPTIONS"])(self.add_card)
         self.app.route("/remove_card", methods=["DELETE"])(self.remove_card)
         self.app.route("/filter_cards", methods=["POST"])(self.filter_cards)
 
