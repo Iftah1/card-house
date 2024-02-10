@@ -2,18 +2,41 @@ import json
 from requests import post, delete
 from flask import Flask
 
+from card_house.cards_exporter.cards_exporter.cards_pdf_exporter import CardsPdfExporter
+from card_house.cards_exporter.cards_exporter_io.cards_file_writer.html_to_pdf_cards_file_writer import \
+    HtmlToPdfCardsFileWriter
+from card_house.cards_exporter.cards_exporter_utils.cards_renderer.cards_html_renderer import CardsHtmlRenderer
+from card_house.cards_exporter.cards_exporter_utils.cards_splitter.cards_splitter import CardsSplitter
 from card_house.infrastructure.cards_creators.db_cards_creator import DBCardsCreator
 from card_house.controller import Controller
 from card_house.db.client_db import CardsDB
 from threading import Thread
 
-controller = Controller(
+from card_house.infrastructure.cards_creators.json_to_cards_creator import JsonToCardsCreator
+from card_house.infrastructure.cards_creators.printed_cards_creator import PrintedCardsCreator
 
+controller = Controller(
     client_db=CardsDB(
         db_name="cards.db"
     ),
     app=Flask(__name__),
     db_cards_creator=DBCardsCreator(),
+    cards_exporter=CardsPdfExporter(
+        cards_splitter=CardsSplitter(
+            configuration={},
+            printed_cards_creator=PrintedCardsCreator(
+                configuration={}
+            ),
+        ),
+        cards_renderer=CardsHtmlRenderer(
+            configuration={}
+        ),
+        cards_file_writer=HtmlToPdfCardsFileWriter(
+            configuration={}
+        ),
+    ),
+    cards_creator=JsonToCardsCreator(),
+    download_path=""
 )
 
 controller_thread = Thread(target=controller.run)

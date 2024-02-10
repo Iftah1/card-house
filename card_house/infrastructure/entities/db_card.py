@@ -32,7 +32,7 @@ class DBCard(Card):
         }
 
 
-class DBCardKeys:
+class CardKeys:
     TYPE = "type"
     CONTENT = "content"
     VERSION = "version"
