@@ -1,9 +1,8 @@
 from typing import List, Dict
 
-from card_house.infrastructure.cards_creators.cards_properties_creator import CardsPropertiesCreator
 from card_house.infrastructure.cards_creators.db_cards_creator import DBCardsCreator
 from card_house.infrastructure.entities.db_card import DBCard
-from db.iclient_db import IClientDB
+from card_house.db.iclient_db import IClientDB
 
 from flask import Flask, request
 

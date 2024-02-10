@@ -1,0 +1,6 @@
+class CardsDBColumns:
+    CARD_ID_COLUM = 1
+    TYPE_COLUM = 2
+    CONTENT_COLUM = 3
+    CREATION_TIME_COLUM = 4
+    VERSION_COLUM = 5

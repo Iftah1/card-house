@@ -1,13 +1,11 @@
 import sqlite3
-from consts import CardsDBColumns
-from datetime import datetime
-from sqlite3 import Connection, Cursor
+from card_house.db.cards_db_columns import CardsDBColumns
 
-from typing import List, Tuple, Any
+from typing import List, Any
 
 from card_house.infrastructure.entities.card_type import CardType
 from card_house.infrastructure.entities.db_card import DBCard
-from db.iclient_db import IClientDB
+from card_house.db.iclient_db import IClientDB
 
 
 class CardsDB(IClientDB):
