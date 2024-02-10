@@ -1,7 +1,7 @@
 from typing import List, Dict
 
 from card_house.infrastructure.cards_creators.db_cards_creator import DBCardsCreator
-from card_house.infrastructure.entities.db_card import DBCard
+from card_house.infrastructure.entities.db_card import DBCard, DBCardKeys
 from card_house.db.iclient_db import IClientDB
 
 from flask import Flask, request
@@ -36,9 +36,9 @@ class Controller:
         return card_id
 
     def remove_card(self) -> str:
-        card_id = request.json.get("card_id")
+        card_id = request.json.get(DBCardKeys.CARD_ID)
         status = self.client_db.remove_card(card_id)
-        return "removed" if status else "not removed"
+        return "removed" if status else "failed"
 
     def filter_cards(self) -> dict:
         filtered_cards = self.client_db.get_cards(request.json)

@@ -30,3 +30,11 @@ class DBCard(Card):
             "creation_time": str(self.creation_time),
             "card_id": self.card_id
         }
+
+
+class DBCardKeys:
+    TYPE = "type"
+    CONTENT = "content"
+    VERSION = "version"
+    CREATION_TIME = "creation_time"
+    CARD_ID = "card_id"
