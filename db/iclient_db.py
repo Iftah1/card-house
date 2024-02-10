@@ -1,21 +1,18 @@
 from abc import ABC, abstractmethod
-from typing import List, NoReturn
+from typing import List
 
-from entities.card import Card
-from entities.card_proprties import CardProperties
-
-from entities.status import Status
+from card_house.infrastructure.entities.db_card import DBCard
 
 
 class IClientDB(ABC):
     @abstractmethod
-    def add_card(self, card: Card) -> Status:
+    def add_card(self, card: DBCard) -> str:
         raise NotImplementedError
 
     @abstractmethod
-    def remove_card(self, card: Card) -> Status:
+    def remove_card(self, card: DBCard) -> bool:
         raise NotImplementedError
 
     @abstractmethod
-    def get_cards(self, card_properties: CardProperties) -> List[Card]:
+    def get_cards(self, card_properties: DBCard) -> List[DBCard]:
         raise NotImplementedError

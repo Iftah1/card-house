@@ -1,17 +1,77 @@
-from typing import List
+import sqlite3
+from consts import CardsDBColumns
+from datetime import datetime
+from sqlite3 import Connection, Cursor
 
-from entities.card import Card
-from entities.card_proprties import CardProperties
-from entities.status import Status
-from iclient_db import IClientDB
+from typing import List, Tuple, Any
+
+from card_house.infrastructure.entities.card_type import CardType
+from card_house.infrastructure.entities.db_card import DBCard
+from db.iclient_db import IClientDB
 
 
-class ClientDB(IClientDB):
-    def add_card(self, card: Card) -> Status:
-        return Status.SUCCESS
+class CardsDB(IClientDB):
+    def __init__(self, db_name: str):
+        self.db_name = db_name
+        self.create_cards_table()
 
-    def remove_card(self, card: Card) -> Status:
-        return Status.SUCCESS
+    def create_cards_table(self):
+        create_table_query = """
+            CREATE TABLE IF NOT EXISTS cards (
+                id INTEGER PRIMARY KEY,
+                card_id TEXT NOT NULL,
+                type TEXT NOT NULL,
+                content TEXT NOT NULL,
+                creation_time DATETIME NOT NULL,
+                version TEXT NOT NULL
+            )
+        """
+        self.execute_query(create_table_query)
 
-    def get_cards(self, card_properties: CardProperties) -> List[Card]:
-        return []
+    def add_card(self, card: DBCard) -> str:
+        insert_query = f"""
+            INSERT INTO cards (content, version, creation_time, card_id, type)
+            VALUES ('{card.content}', '{card.version}', '{card.creation_time}', '{card.card_id}', '{card.type.value}')
+        """
+        self.execute_query(insert_query)
+        return card.card_id
+
+    def remove_card(self, card_id: str) -> bool:
+        delete_query = f"""
+            DELETE FROM cards
+            WHERE card_id = '{card_id}'
+        """
+        self.execute_query(delete_query)
+        return True
+
+    def get_cards(self, card_properties: dict) -> List[DBCard]:
+        select_query = """
+            SELECT * FROM cards where 1 = 1
+        """
+        for key, value in card_properties.items():
+            select_query += f" and {key} = '{value}'"
+        resulted_cards = self.execute_query(select_query)
+        cards = []
+        for card in resulted_cards:
+            cards.append(
+                DBCard(
+                    card_id=card[CardsDBColumns.CARD_ID_COLUM],
+                    type=CardType(card[CardsDBColumns.TYPE_COLUM]),
+                    content=card[CardsDBColumns.CONTENT_COLUM],
+                    creation_time=card[CardsDBColumns.CREATION_TIME_COLUM],
+                    version=card[CardsDBColumns.VERSION_COLUM],
+                )
+            )
+        return cards
+
+    def execute_query(self, query: str) -> Any:
+        conn, cursor = self.get_db_connection()
+        cursor.execute(query)
+        result = cursor.fetchall()
+        conn.commit()
+        conn.close()
+        return result
+
+    def get_db_connection(self):
+        conn = sqlite3.connect(self.db_name)
+        return conn, conn.cursor()
