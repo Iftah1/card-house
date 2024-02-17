@@ -16,3 +16,11 @@ class IClientDB(ABC):
     @abstractmethod
     def get_cards(self, card_properties: Dict[str, Any]) -> List[DBCard]:
         raise NotImplementedError
+
+    @abstractmethod
+    def get_all_cards(self):
+        raise NotImplementedError
+
+    @abstractmethod
+    def is_card_exists(self, card: DBCard):
+        raise NotImplementedError

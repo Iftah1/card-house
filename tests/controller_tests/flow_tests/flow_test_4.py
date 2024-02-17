@@ -12,7 +12,6 @@ from card_house.controller import Controller
 from card_house.db.client_db import CardsDB
 from threading import Thread
 
-from card_house.infrastructure.cards_creators.json_to_cards_creator import JsonToCardsCreator
 from card_house.infrastructure.cards_creators.printed_cards_creator import PrintedCardsCreator
 
 controller = Controller(
@@ -35,7 +34,6 @@ controller = Controller(
             configuration={}
         ),
     ),
-    cards_creator=JsonToCardsCreator(),
     download_path=""
 )
 

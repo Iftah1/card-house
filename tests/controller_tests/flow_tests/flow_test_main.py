@@ -17,7 +17,6 @@ from card_house.infrastructure.cards_creators.db_cards_creator import DBCardsCre
 from card_house.controller import Controller
 from card_house.db.client_db import CardsDB
 from card_house.infrastructure.cards_creators.icards_creator import ICardsCreator
-from card_house.infrastructure.cards_creators.json_to_cards_creator import JsonToCardsCreator
 from card_house.infrastructure.cards_creators.printed_cards_creator import PrintedCardsCreator
 
 
@@ -48,7 +47,6 @@ controller = Controller(
     app=Flask(__name__),
     db_cards_creator=DBCardsCreator(),
     cards_exporter=create_exporter(configuration_path),
-    cards_creator=JsonToCardsCreator(),
     download_path=os.getcwd()
 )
 

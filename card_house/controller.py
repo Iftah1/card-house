@@ -1,17 +1,12 @@
-import os
-from typing import List, Dict, Any
+from typing import Dict, Any
 
 from card_house.cards_exporter.cards_exporter.icards_exporter import ICardsExporter
-from card_house.db.error import CardExists
+from card_house.db.error import CardExistsException
 from card_house.infrastructure.cards_creators.db_cards_creator import DBCardsCreator
-from card_house.infrastructure.cards_creators.json_to_cards_creator import JsonToCardsCreator
 from card_house.infrastructure.entities.db_card import DBCard, CardKeys
 from card_house.db.iclient_db import IClientDB
 
 from flask import Flask, request
-
-
-CARDS_SERIALIZED = Dict[str, List[Dict[str, str]]]
 
 
 class Controller:
@@ -21,14 +16,12 @@ class Controller:
             client_db: IClientDB,
             db_cards_creator: DBCardsCreator,
             cards_exporter: ICardsExporter,
-            cards_creator: JsonToCardsCreator,
             app: Flask
     ):
         self.download_path = download_path
         self.app = app
         self.cards_exporter = cards_exporter
         self.db_card_creator = db_cards_creator
-        self.cards_creator = cards_creator
         self.client_db = client_db
         self._setup_routes()
 
@@ -42,17 +35,9 @@ class Controller:
         self.app.run(debug=True)
 
     def add_card(self) -> str:
-        card = self.cards_creator.create_card(request)
-        db_card = self.db_card_creator.create_card(card)
-        card_with_same_properties = self.client_db.get_cards(
-            card_properties={
-                CardKeys.TYPE: db_card.type.value,
-                CardKeys.CONTENT: db_card.content,
-            }
-        )
-
-        if len(card_with_same_properties) != 0:
-            raise CardExists
+        db_card = self.db_card_creator.create_card(request)
+        if self.client_db.is_card_exists(db_card):
+            raise CardExistsException
 
         card_id = self.client_db.add_card(db_card)
         return card_id
@@ -68,6 +53,6 @@ class Controller:
         return cards_serialized
 
     def export_cards(self) -> str:
-        cards = self.cards_creator.create_cards(request)
+        cards = self.client_db.get_all_cards()
         self.cards_exporter.export_cards(cards, self.download_path)
         return "success"

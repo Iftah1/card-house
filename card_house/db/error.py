@@ -1,2 +1,2 @@
-class CardExists(Exception):
+class CardExistsException(Exception):
     pass

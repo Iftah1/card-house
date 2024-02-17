@@ -4,7 +4,7 @@ from card_house.db.cards_db_columns import CardsDBColumns
 from typing import List, Any, Dict
 
 from card_house.infrastructure.entities.card_type import CardType
-from card_house.infrastructure.entities.db_card import DBCard
+from card_house.infrastructure.entities.db_card import DBCard, CardKeys
 from card_house.db.iclient_db import IClientDB
 
 
@@ -49,6 +49,10 @@ class CardsDB(IClientDB):
         for key, value in card_properties.items():
             select_query += f" and {key} = '{value}'"
         resulted_cards = self.execute_query(select_query)
+
+        if resulted_cards is None:
+            return []
+
         cards = []
         for card in resulted_cards:
             cards.append(
@@ -62,14 +66,29 @@ class CardsDB(IClientDB):
             )
         return cards
 
+    def is_card_exists(self, card: DBCard):
+        cards_with_same_properties = self.get_cards(
+            card_properties={
+                CardKeys.TYPE: card.type.value,
+                CardKeys.CONTENT: card.content,
+            }
+        )
+
+        return len(cards_with_same_properties) != 0
+
+    def get_all_cards(self):
+        return self.get_cards({})
+
     def execute_query(self, query: str) -> Any:
-        conn, cursor = self.get_db_connection()
-        cursor.execute(query)
-        result = cursor.fetchall()
-        conn.commit()
-        conn.close()
+        conn, cursor = self.create_connection()
+        try:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            conn.commit()
+        finally:
+            conn.close()
         return result
 
-    def get_db_connection(self):
+    def create_connection(self):
         conn = sqlite3.connect(self.db_name)
         return conn, conn.cursor()
